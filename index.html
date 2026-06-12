@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Executivo - Casa do Patrão (Assaí Atacadista)</title>
+    <style>
+        :root {
+            --assai-blue: #003B70;
+            --assai-orange: #F47920;
+            --assai-blue-light: #0056A3;
+            --bg-light: #F4F6F9;
+            --card-bg: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-sub: #64748B;
+            --border-color: #E2E8F0;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* 1. Header */
+        .dashboard-header {
+            background-color: var(--assai-blue);
+            color: white;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-lg);
+            border-bottom: 6px solid var(--assai-orange);
+            position: relative;
+        }
+
+        .header-logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .logo {
+            height: 56px;
+            object-fit: contain;
+            background-color: var(--card-bg);
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .dashboard-header h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #E0E7FF;
+            margin-bottom: 24px;
+        }
+
+        .period-badge {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 6px 16px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--assai-blue);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .section-title::before {
+            content: "";
+            display: block;
+            width: 8px;
+            height: 24px;
+            background-color: var(--assai-orange);
+            border-radius: 4px;
+        }
+
+        /* 2. KPIs */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .kpi-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 32px 24px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-top: 4px solid var(--assai-blue-light);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .kpi-card:nth-child(3) {
+            border-top-color: var(--assai-orange);
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--assai-blue);
+            line-height: 1.1;
+        }
+
+        .kpi-card:nth-child(3) .kpi-value {
+            color: var(--assai-orange);
+        }
+
+        .kpi-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-sub);
+        }
+
+        /* 3. Table Section */
+        .table-section {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 48px;
+            overflow: hidden;
+        }
+
+        .table-intro {
+            padding: 24px 32px 0;
+            color: var(--text-sub);
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--assai-blue);
+            color: white;
+            padding: 16px 32px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 16px 32px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            vertical-align: middle;
+        }
+
+        tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        tr:hover td {
+            background-color: #F1F5F9;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight-bold {
+            font-weight: 600;
+            color: var(--assai-blue);
+        }
+
+        .badge-type {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background-color: #E2E8F0;
+            color: #475569;
+        }
+
+        .badge-type.qr {
+            background-color: #FEF3C7;
+            color: #D97706;
+        }
+
+        .badge-type.link {
+            background-color: #E0E7FF;
+            color: #4338CA;
+        }
+
+        /* 4. Social Media Grid */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .social-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .social-card[data-network="instagram-feed"] {
+            border-top: 4px solid #E1306C;
+        }
+        
+        .social-card[data-network="instagram-stories"] {
+            border-top: 4px solid #F56040;
+        }
+
+        .social-card[data-network="tiktok"] {
+            border-top: 4px solid #000000;
+        }
+
+        .social-header {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--assai-blue);
+            margin-bottom: 20px;
+        }
+
+        .social-metrics {
+            background-color: var(--bg-light);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .social-metrics ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .social-metrics li {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            color: var(--text-sub);
+        }
+
+        .social-metrics li strong {
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .social-highlight {
+            background-color: #FFF7ED;
+            border: 1px solid #FFEDD5;
+            color: #9A3412;
+            padding: 20px;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .social-highlight strong {
+            font-weight: 700;
+        }
+
+        /* 5. Insights */
+        .insights-section {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .insights-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .insights-list li {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .insights-list li::before {
+            content: "➔";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: #FFF7ED;
+            color: var(--assai-orange);
+            font-weight: bold;
+            border-radius: 50%;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .insights-list strong {
+            color: var(--assai-blue);
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 32px 24px;
+            }
+            .header-logos {
+                margin-bottom: 24px;
+            }
+            .logo {
+                height: 44px;
+                padding: 6px 12px;
+            }
+            .dashboard-header h1 {
+                font-size: 1.75rem;
+            }
+            .kpi-value {
+                font-size: 2.25rem;
+            }
+            th, td {
+                padding: 16px 20px;
+            }
+            .insights-section {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- 1. Header -->
+        <header class="dashboard-header">
+            <div class="header-logos">
+                <img src="https://i.imgur.com/ihchsJt.png" alt="Assaí Atacadista Logo" class="logo">
+                <img src="https://i.imgur.com/lAyMWKF.png" alt="Mega Midia Logo" class="logo">
+            </div>
+            <h1>Relatório Executivo de Performance – Casa do Patrão (Assaí Atacadista)</h1>
+            <h2>Análise Consolidada de Tráfego Web, QR Codes e Presença em Redes Sociais.</h2>
+            <div class="period-badge">Abril, Maio e Junho de 2026</div>
+        </header>
+
+        <!-- 2. KPIs -->
+        <section>
+            <h3 class="section-title">Indicadores Chave de Performance</h3>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value">114.622</div>
+                    <div class="kpi-label">Interações Totais no Site/QR Codes</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">42.163</div>
+                    <div class="kpi-label">Acessos Efetivos ao Site (Sessões)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">36,7%</div>
+                    <div class="kpi-label">Taxa Média de Conversão (Clique/Acesso)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">4,39M</div>
+                    <div class="kpi-label">Alcance/Visualizações Totais (Redes Sociais)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Table -->
+        <section>
+            <h3 class="section-title">Performance do Site</h3>
+            <div class="table-section">
+                <div class="table-intro">
+                    Análise do tráfego direcionado ao site oficial e aplicativos através de ações na TV e canais digitais.
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Campanha/Origem</th>
+                                <th>Interações</th>
+                                <th>Acessos</th>
+                                <th>Tempo Médio</th>
+                                <th>Engajamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="highlight-bold">Ofertas Casa do Patrão</span>
+                                    <span class="badge-type link">Link</span>
+                                </td>
+                                <td>34.427</td>
+                                <td>10.671</td>
+                                <td>33s</td>
+                                <td>31,0%</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="highlight-bold">Prova Casa do Patrão</span>
+                                    <span class="badge-type qr">QR Code</span>
+                                </td>
+                                <td>19.306</td>
+                                <td>8.847</td>
+                                <td>24s</td>
+                                <td>45,8%</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="highlight-bold">CASA DO PATRÃO - 13/05</span>
+                                    <span class="badge-type qr">QR Code</span>
+                                </td>
+                                <td>20.209</td>
+                                <td>8.649</td>
+                                <td>37s</td>
+                                <td>42,8%</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="highlight-bold">Nossas Lojas Casa do Patrão</span>
+                                    <span class="badge-type link">Link</span>
+                                </td>
+                                <td>15.377</td>
+                                <td>5.556</td>
+                                <td>42s</td>
+                                <td>36,1%</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="highlight-bold">CASA DO PATRÃO - 01/06</span>
+                                    <span class="badge-type link">Link</span>
+                                </td>
+                                <td>10.617</td>
+                                <td>4.309</td>
+                                <td>36s</td>
+                                <td>40,6%</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="highlight-bold">Ifood Casa do Patrão</span>
+                                    <span class="badge-type link">Link</span>
+                                </td>
+                                <td>10.546</td>
+                                <td>2.513</td>
+                                <td>26s</td>
+                                <td>23,8%</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="highlight-bold">App Meu Assaí</span>
+                                    <span class="badge-type qr">QR Code</span>
+                                </td>
+                                <td>4.140</td>
+                                <td>1.618</td>
+                                <td>29s</td>
+                                <td>39,1%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Social Media -->
+        <section>
+            <h3 class="section-title">Performance de Redes Sociais</h3>
+            <div class="social-grid">
+                
+                <div class="social-card" data-network="instagram-feed">
+                    <div class="social-header">Instagram Feed</div>
+                    <div class="social-metrics">
+                        <ul>
+                            <li>Alcance Total <strong>2,78 Milhões</strong></li>
+                            <li>Interações Totais <strong>48.978</strong></li>
+                        </ul>
+                    </div>
+                    <div class="social-highlight">
+                        <strong>Destaque:</strong> O formato Estático superou os demais em engajamento, registrando média de 13,8% por post. O post de domingo (24/05) gerou sozinho 17.151 curtidas.
+                    </div>
+                </div>
+
+                <div class="social-card" data-network="instagram-stories">
+                    <div class="social-header">Instagram Stories</div>
+                    <div class="social-metrics">
+                        <ul>
+                            <li>Alcance Total <strong>1,00 Milhão</strong></li>
+                            <li>Interações Totais <strong>12.812</strong></li>
+                            <li>Visitas ao Perfil <strong>4.407</strong></li>
+                        </ul>
+                    </div>
+                    <div class="social-highlight">
+                        <strong>Destaque:</strong> Excelente ferramenta de conversão direta. Pico de audiência registrado nas quintas-feiras (28/05), alcançando até 69,4 mil usuários por sequência.
+                    </div>
+                </div>
+
+                <div class="social-card" data-network="tiktok">
+                    <div class="social-header">TikTok</div>
+                    <div class="social-metrics">
+                        <ul>
+                            <li>Visualizações <strong>611.268</strong></li>
+                            <li>Interações Totais <strong>2.235</strong></li>
+                        </ul>
+                    </div>
+                    <div class="social-highlight">
+                        <strong>Destaque:</strong> Comportamento altamente viral. Um único vídeo publicado na segunda-feira (18/05) às 22h concentrou 99% da audiência do canal, obtendo 605.270 views.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. Insights -->
+        <section>
+            <h3 class="section-title">Insights Estratégicos & Recomendações</h3>
+            <div class="insights-section">
+                <ul class="insights-list">
+                    <li>
+                        <span><strong>O Poder do QR Code na TV:</strong> Embora os links gerem volume bruto, as ações interativas via QR Code em tela geraram as maiores taxas de engajamento da campanha (picos de 45,8%).</span>
+                    </li>
+                    <li>
+                        <span><strong>Foco Comercial Direto:</strong> A campanha de "Ofertas" foi o maior motor de tráfego (10,6k acessos). O público impactado tem alta intenção de consumo.</span>
+                    </li>
+                    <li>
+                        <span><strong>Oportunidade de Dias e Horários:</strong> Posts de Instagram aos Domingos ao meio-dia e TikTok nas Segundas-feiras às 22h mostraram picos anômalos de entrega e interação. Devem ser priorizados.</span>
+                    </li>
+                    <li>
+                        <span><strong>Ajuste de Rastreabilidade:</strong> É mandatório revisar as tags UTM e os encurtadores das campanhas que ficaram zeradas para evitar perda de dados futuros.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+</body>
+</html>
